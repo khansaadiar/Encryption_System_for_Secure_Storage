@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #e9f6ff; /* Light pastel blue */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #61a4e4; /* Soft blue */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        h1, h2 {
+            color: #333;
+            margin: 10px 0;
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #d1e8ff; /* Light blue */
+        }
+        .flashes {
+            list-style: none;
+            padding: 0;
+        }
+        .flashes li {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .danger { background-color: #f8d7da; color: #721c24; }
+        .warning { background-color: #fff3cd; color: #856404; }
+        a {
+            color: #61a4e4;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background-color: #61a4e4;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        <h2>User Storage Usage</h2>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Number of Files</th>
+                <th>Total Size (bytes)</th>
+            </tr>
+            {% for user in storage_info %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.files }}</td>
+                <td>{{ user.total_size }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Encrypted Files</h2>
+<table>
+    <tr>
+        <th>Filename</th>
+        <th>File Path</th>
+        <th>Owner</th>
+        <th>File Size (bytes)</th>
+        <th>Download Encrypted</th>
+        <th>Download Original</th>
+    </tr>
+    {% for file in encrypted_files %}
+    <tr>
+        <td>{{ file.filename }}</td>
+        <td>{{ file.filepath }}</td>
+        <td>{{ file.owner }}</td>
+        <td>{{ file.filesize }}</td>
+        <td><a href="{{ file.download_encrypted_url }}">Download Encrypted</a></td>
+        <td><a href="{{ file.download_original_url }}">Download Original (Login Required)</a></td>
+    </tr>
+    {% endfor %}
+</table>
+        
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Cloud Storage. All rights reserved.</p>
+    </footer>
+</body>
+</html>

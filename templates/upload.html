@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #e9f6ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .encryption-method {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #61a4e4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #4a8bc7;
+        }
+        a {
+            margin-top: 15px;
+            display: block;
+            text-decoration: none;
+            color: #61a4e4;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #4a8bc7;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        
+        <div class="encryption-method">
+            <label>
+                <input type="radio" name="encryption_method" value="aes" required> AES
+            </label><br>
+            <label>
+                <input type="radio" name="encryption_method" value="des" required> DES
+            </label>
+        </div>
+        
+        <button type="submit">Upload</button>
+    </form>
+    <a href="/dashboard">Go back to Dashboard</a>
+</body>
+</html>
